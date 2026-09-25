@@ -1,0 +1,9 @@
+# Every LED on, white, at half brightness, then back to the time. A hardware
+# check, so it ignores colours, effects, brightness and the Display light
+# being off.
+#
+# duration: How long to show it, in milliseconds (100 to 600000).
+
+action: esphome.wifi_clock_lamp_test
+data:
+  duration: 3000

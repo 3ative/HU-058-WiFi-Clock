@@ -1,0 +1,24 @@
+# Set every effect setting in one call. The clock's Effect entities update
+# to match, so the Home Assistant UI shows what the panel is doing. Effects
+# run on the clock itself, so they stay smooth if WiFi drops.
+#
+# mode:       0 off, 1 Color Cycle, 2 Flash.
+# spread:     0 whole panel, 1 per digit, 2 per LED (the smooth sweep).
+# speed:      Seconds for one full cycle, 0.5 to 600. For Flash, one complete
+#             on and off.
+# angle:      Which way the spread runs, -180 to 180. 0 is left to right,
+#             90 top to bottom.
+# hue_span:   How many degrees of the colour wheel the panel covers end to
+#             end, 0 to 360. Narrow looks best: 60 is about red to orange,
+#             90 reaches yellow. Color Cycle only, and not with spread 0.
+# flash_fade: Seconds each flash on or off takes, 0 to 30. 0 snaps.
+
+# A slow colour sweep across the digits
+action: esphome.wifi_clock_set_effect
+data:
+  mode: 1
+  spread: 2
+  speed: 10
+  angle: 0
+  hue_span: 90
+  flash_fade: 0

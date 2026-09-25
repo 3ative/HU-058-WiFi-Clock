@@ -1,0 +1,20 @@
+# A two colour ramp across the whole panel. The two colours land exactly on
+# the outermost LEDs, whatever the angle. Not remembered across a reboot.
+# clear_digit_colors hands it back.
+#
+# red1, green1, blue1: Start colour, 0 to 255.
+# red2, green2, blue2: End colour, 0 to 255.
+# angle:               Direction in degrees. 0 runs left to right, 90 top to
+#                      bottom, 180 right to left. -45 runs from the bottom
+#                      left corner to the top right.
+
+# Green bottom left to yellow top right
+action: esphome.wifi_clock_set_gradient
+data:
+  red1: 0
+  green1: 255
+  blue1: 25
+  red2: 255
+  green2: 215
+  blue2: 0
+  angle: -45

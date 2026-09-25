@@ -1,0 +1,531 @@
+# HU-058 World Clock - ESPHome on an ESP32-C3 Super Mini, by 3ATIVE.
+# Based on misterblack1's original: https://github.com/misterblack1/HU-058_ESPHome
+
+substitutions:
+  name: wifi-clock   # Give each clock its own, e.g. world-clock-tokyo
+  friendly_name: WiFi Clock
+  bright_min: "1"
+  bright_max: "50"
+  temperature: sensor.bedroom_temperature
+  # Time Zone options: a city name, then its POSIX TZ rule. More cities:
+  # https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
+  city1: London
+  city1_tz: "GMT0BST,M3.5.0/1,M10.5.0"
+  city2: New York
+  city2_tz: "EST5EDT,M3.2.0,M11.1.0"
+  city3: Los Angeles
+  city3_tz: "PST8PDT,M3.2.0,M11.1.0"
+  city4: Tokyo
+  city4_tz: "JST-9"
+  city5: Sydney
+  city5_tz: "AEST-10AEDT,M10.1.0,M4.1.0/3"
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  # Restored numbers/selects don't fire set_action, so push effects in at boot
+  on_boot:
+    priority: -100
+    then:
+      - lambda: |-
+          id(panel)->set_effect_speed(id(effect_speed).state);
+          id(panel)->set_effect_angle(id(effect_angle).state);
+          id(panel)->set_effect_hue_span(id(effect_hue_span).state);
+          id(panel)->set_flash_fade(id(fx_flash_fade).state);
+          std::string sp = id(effect_spread).current_option();
+          id(panel)->set_effect_spread(sp == "Per Digit" ? 1 : sp == "Per LED" ? 2 : 0);
+          std::string ef = id(effect_mode).current_option();
+          id(panel)->set_effect(ef == "Color Cycle" ? 1 : ef == "Flash" ? 2 : 0);
+      - script.execute: apply_timezone
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+external_components:
+  - source:
+      type: local
+      path: components
+
+logger:
+  level: INFO
+
+api:
+  # Examples for every action are in the repo's actions folder
+  actions:
+    - action: show_number
+      variables:
+        value: int
+        unit: string
+        duration: int
+      then:
+        - lambda: id(panel)->show_number(value, unit, duration);
+    - action: show_text
+      variables:
+        message: string
+        duration: int
+      then:
+        - lambda: id(panel)->show_text(message, duration);
+    - action: lamp_test
+      variables:
+        duration: int
+      then:
+        - lambda: id(panel)->lamp_test(duration);
+    - action: set_digit_color
+      variables:
+        digit: int
+        red: int
+        green: int
+        blue: int
+      then:
+        - lambda: |-
+            id(panel)->set_digit_color(digit, red / 255.0f, green / 255.0f, blue / 255.0f);
+    - action: clear_digit_colors
+      then:
+        - lambda: id(panel)->clear_digit_colors();
+    - action: set_position_color
+      variables:
+        position: int
+        red: int
+        green: int
+        blue: int
+      then:
+        - lambda: |-
+            id(panel)->set_position_color(position, red / 255.0f, green / 255.0f, blue / 255.0f);
+    - action: set_effect
+      variables:
+        mode: int
+        spread: int
+        speed: float
+        angle: float
+        hue_span: float
+        flash_fade: float
+      then:
+        # Drives the entities so HA stays in sync. Clamped, as out of range is dropped
+        - lambda: |-
+            id(effect_speed).make_call().set_value(clamp(speed, 0.5f, 600.0f)).perform();
+            id(effect_angle).make_call().set_value(clamp(angle, -180.0f, 180.0f)).perform();
+            id(effect_hue_span).make_call().set_value(clamp(hue_span, 0.0f, 360.0f)).perform();
+            id(fx_flash_fade).make_call().set_value(clamp(flash_fade, 0.0f, 30.0f)).perform();
+            id(effect_spread).make_call().set_option(spread == 1 ? "Per Digit" : spread == 2 ? "Per LED" : "Whole Panel").perform();
+            id(effect_mode).make_call().set_option(mode == 1 ? "Color Cycle" : mode == 2 ? "Flash" : "None").perform();
+    - action: set_gradient
+      variables:
+        red1: int
+        green1: int
+        blue1: int
+        red2: int
+        green2: int
+        blue2: int
+        angle: float
+      then:
+        - lambda: |-
+            id(panel)->set_gradient(red1 / 255.0f, green1 / 255.0f, blue1 / 255.0f, red2 / 255.0f, green2 / 255.0f, blue2 / 255.0f, angle);
+
+ota:
+  - platform: esphome
+    # Displays "OtA" while updating
+    on_begin:
+      - lambda: |-
+          id(panel)->show_text("Ota", 600000);
+          id(panel)->redraw_now();
+    on_error:
+      - lambda: |-
+          id(panel)->show_time();
+          id(panel)->redraw_now();
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  output_power: 8.5dB
+  ap:
+    ssid: ${friendly_name} Setup
+  # Top colon dot goes out while WiFi is down
+  on_connect:
+    - lambda: id(panel)->set_online(true);
+  on_disconnect:
+    - lambda: id(panel)->set_online(false);
+
+captive_portal:
+
+aip33628:
+  id: panel
+  clk_pin: GPIO4
+  data_pin: GPIO5
+  clk2_pin: GPIO6
+  data2_pin: GPIO7
+  time_id: ha_time
+  twelve_hour: true   # First boot defaults, the switches own these after
+  blink_colon: true
+  max_current: 15     # 0 to 15, lower runs the drivers cooler
+
+binary_sensor:
+  - platform: gpio
+    id: button_1
+    name: Button 1
+    pin:
+      number: GPIO3
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    filters:
+      - delayed_on: 20ms
+      - delayed_off: 20ms
+  - platform: gpio
+    id: button_2
+    name: Button 2
+    pin:
+      number: GPIO10
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    filters:
+      - delayed_on: 20ms
+      - delayed_off: 20ms
+
+button:
+  - platform: template
+    name: Lamp Test
+    on_press:
+      - lambda: id(panel)->lamp_test(3000);
+
+  - platform: template
+    name: Digit Color Demo
+    on_press:
+      - lambda: |-
+          id(panel)->set_digit_color(0, 1.00f, 0.00f, 0.00f);
+          id(panel)->set_digit_color(1, 1.00f, 0.45f, 0.00f);
+          id(panel)->set_digit_color(2, 0.00f, 1.00f, 0.25f);
+          id(panel)->set_digit_color(3, 0.10f, 0.30f, 1.00f);
+
+  - platform: template
+    name: Clear Digit Colors
+    on_press:
+      - lambda: id(panel)->clear_digit_colors();
+
+  - platform: template
+    name: Diagonal Gradient
+    on_press:
+      - lambda: |-
+          id(panel)->set_gradient(0.00f, 1.00f, 0.10f, 1.00f, 0.85f, 0.00f, -45.0f);
+
+# For display_cycle_run
+globals:
+  - id: cycle_want
+    type: int
+    initial_value: "-1"
+  - id: cycle_date_next
+    type: bool
+    initial_value: "false"
+
+light:
+  - platform: aip33628
+    id: display
+    aip33628_id: panel
+    name: Display
+    restore_mode: RESTORE_DEFAULT_ON
+    gamma_correct: 1.0   # Gamma is done in the component
+
+number:
+  - platform: template
+    name: Auto Brightness Min
+    id: bright_min
+    optimistic: true
+    restore_value: true
+    initial_value: ${bright_min}
+    min_value: 1
+    max_value: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: box
+    on_value:
+      - lambda: id(ldr_resistance).publish_state(id(ldr_resistance).state);
+
+  - platform: template
+    name: Auto Brightness Max
+    id: bright_max
+    optimistic: true
+    restore_value: true
+    initial_value: ${bright_max}
+    min_value: 1
+    max_value: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: box
+    on_value:
+      - lambda: id(ldr_resistance).publish_state(id(ldr_resistance).state);
+
+  - platform: template
+    name: Effect Speed
+    id: effect_speed
+    optimistic: true
+    restore_value: true
+    initial_value: 10
+    min_value: 0.5
+    max_value: 600
+    step: 0.5
+    unit_of_measurement: s
+    mode: box
+    set_action:
+      - lambda: id(panel)->set_effect_speed(x);
+
+  - platform: template
+    name: Effect Angle
+    id: effect_angle
+    optimistic: true
+    restore_value: true
+    initial_value: 0
+    min_value: -180
+    max_value: 180
+    step: 15
+    unit_of_measurement: deg
+    mode: box
+    set_action:
+      - lambda: id(panel)->set_effect_angle(x);
+
+  - platform: template
+    name: Effect Hue Span
+    id: effect_hue_span
+    optimistic: true
+    restore_value: true
+    initial_value: 90
+    min_value: 0
+    max_value: 360
+    step: 5
+    unit_of_measurement: deg
+    mode: box
+    set_action:
+      - lambda: id(panel)->set_effect_hue_span(x);
+
+  - platform: template
+    name: Flash Fade
+    id: fx_flash_fade
+    optimistic: true
+    restore_value: true
+    initial_value: 0
+    min_value: 0
+    max_value: 30
+    step: 0.05
+    unit_of_measurement: s
+    mode: box
+    set_action:
+      - lambda: id(panel)->set_flash_fade(x);
+
+script:
+  - id: apply_timezone
+    then:
+      - lambda: |-
+          static const char *const TZ[] = {"${city1_tz}", "${city2_tz}", "${city3_tz}",
+                                           "${city4_tz}", "${city5_tz}"};
+          auto i = id(time_zone).active_index();
+          if (i.has_value() && *i < 5)
+            id(panel)->set_timezone(TZ[*i]);
+
+  # Cycle Temperature and Cycle Date: 3s on, 8s cycle, taking turns.
+  # cycle_want: 0 temp, 1 date, -1 next in turn. Needed because
+  # turn_on_action runs before the switch shows as on.
+  - id: display_cycle_run
+    mode: restart
+    then:
+      - while:
+          condition:
+            lambda: return true;
+          then:
+            - lambda: |-
+                int want = id(cycle_want);
+                id(cycle_want) = -1;
+                bool t_ok = (id(cycle_temperature).state || want == 0) &&
+                            !std::isnan(id(room_temp).state);
+                bool d_ok = (id(cycle_date).state || want == 1) &&
+                            id(ha_time).now().is_valid();
+                if ((!t_ok && !d_ok) || !id(panel)->showing_time())
+                  return;
+                bool date_turn = want == 1 ? true : want == 0 ? false : id(cycle_date_next);
+                if ((date_turn && d_ok) || !t_ok) {
+                  std::string fmt = id(date_format).current_option();
+                  id(panel)->show_date(fmt == "MM-DD", 3000);
+                  id(cycle_date_next) = false;
+                } else {
+                  bool f = id(room_temp_unit).state.find('F') != std::string::npos;
+                  id(panel)->show_number((int) lroundf(id(room_temp).state), f ? "F" : "C", 3000);
+                  id(cycle_date_next) = true;
+                }
+            - delay: 8s
+
+select:
+  - platform: template
+    name: Effect
+    id: effect_mode
+    optimistic: true
+    restore_value: true
+    initial_option: "None"
+    options: ["None", "Color Cycle", "Flash"]
+    set_action:
+      - lambda: |-
+          std::string v = x;
+          id(panel)->set_effect(v == "Color Cycle" ? 1 : v == "Flash" ? 2 : 0);
+
+  - platform: template
+    name: Effect Spread
+    id: effect_spread
+    optimistic: true
+    restore_value: true
+    initial_option: "Whole Panel"
+    options: ["Whole Panel", "Per Digit", "Per LED"]
+    set_action:
+      - lambda: |-
+          std::string v = x;
+          id(panel)->set_effect_spread(v == "Per Digit" ? 1 : v == "Per LED" ? 2 : 0);
+
+  - platform: template
+    name: Date Format
+    id: date_format
+    optimistic: true
+    restore_value: true
+    initial_option: "DD-MM"
+    options: ["DD-MM", "MM-DD"]
+
+  # Off is a steady colon. on_value, as restoring doesn't fire set_action
+  - platform: template
+    name: Colon
+    id: colon_mode
+    optimistic: true
+    restore_value: true
+    initial_option: "Blink"
+    options: ["Off", "Blink", "Blink Fast"]
+    on_value:
+      - lambda: |-
+          std::string v = id(colon_mode).current_option();
+          id(panel)->set_colon_mode(v == "Blink Fast" ? 2 : v == "Blink" ? 1 : 0);
+
+  - platform: template
+    name: Time Zone
+    id: time_zone
+    optimistic: true
+    restore_value: true
+    initial_option: ${city1}
+    options: ["${city1}", "${city2}", "${city3}", "${city4}", "${city5}"]
+    on_value:
+      - script.execute: apply_timezone
+
+sensor:
+  - platform: homeassistant
+    id: room_temp
+    entity_id: ${temperature}
+    internal: true
+
+  - platform: adc
+    id: ldr_voltage
+    pin: GPIO1
+    attenuation: 12db
+    update_interval: 2s
+    internal: true
+    filters:
+      - median:
+          window_size: 3
+          send_every: 1
+          send_first_at: 1
+
+  - platform: resistance
+    id: ldr_resistance
+    name: LDR Resistance
+    sensor: ldr_voltage
+    configuration: DOWNSTREAM
+    resistor: 10kOhm
+    reference_voltage: 3.3V
+    accuracy_decimals: 0
+    filters:
+      - delta: 10%
+    on_value:
+      then:
+        - if:
+            condition:
+              and:
+                - switch.is_on: auto_brightness
+                - light.is_on: display
+            then:
+              - light.turn_on:
+                  id: display
+                  transition_length: 1s
+                  brightness: !lambda |-
+                    if (std::isnan(x) || x <= 0) return id(display).current_values.get_brightness();
+                    float t = (log10f(x) - 3.0f) / 2.0f;
+                    t = clamp(t, 0.0f, 1.0f);
+                    float lo = id(bright_min).state, hi = id(bright_max).state;
+                    float pct = hi - t * (hi - lo);
+                    return clamp(pct, 1.0f, 100.0f) / 100.0f;
+
+switch:
+  - platform: template
+    id: twenty_four_hour_mode
+    name: 24 Hour Time
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    turn_on_action:
+      - lambda: id(panel)->set_twelve_hour(false);
+    turn_off_action:
+      - lambda: id(panel)->set_twelve_hour(true);
+
+  - platform: template
+    id: auto_brightness
+    name: Auto Brightness
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
+    turn_on_action:
+      - lambda: id(ldr_resistance).publish_state(id(ldr_resistance).state);
+
+  - platform: template
+    id: cycle_temperature
+    name: Cycle Temperature
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    turn_on_action:
+      - lambda: id(cycle_want) = 0;
+      - script.execute: display_cycle_run
+    turn_off_action:
+      - if:
+          condition:
+            switch.is_off: cycle_date
+          then:
+            - script.stop: display_cycle_run
+
+  - platform: template
+    id: cycle_date
+    name: Cycle Date
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    turn_on_action:
+      - lambda: id(cycle_want) = 1;
+      - script.execute: display_cycle_run
+    turn_off_action:
+      - if:
+          condition:
+            switch.is_off: cycle_temperature
+          then:
+            - script.stop: display_cycle_run
+
+text:
+  - platform: template
+    name: Show Text
+    optimistic: true
+    mode: text
+    max_length: 4
+    set_action:
+      - lambda: id(panel)->show_text(x, 5000);
+
+text_sensor:
+  # For C/F auto-detect
+  - platform: homeassistant
+    id: room_temp_unit
+    entity_id: ${temperature}
+    attribute: unit_of_measurement
+    internal: true
+
+time:
+  # Setting a timezone stops HA pushing its own, so Time Zone can take over
+  - platform: homeassistant
+    id: ha_time
+    timezone: ${city1_tz}

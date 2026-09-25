@@ -1,0 +1,15 @@
+# Colour one LED. Beats the digit colour, which beats the Display light.
+# Not remembered across a reboot. clear_digit_colors hands it back.
+#
+# position:         LED id, 1 to 33, from misterblack1's LED position map:
+#                   https://github.com/misterblack1/HU-058_ESPHome/blob/main/docs/led-layout.md
+#                   Handy ones: AM 8, colon upper 16, colon lower 18,
+#                   date dash 17, degree mark 26.
+# red, green, blue: 0 to 255.
+
+action: esphome.wifi_clock_set_position_color
+data:
+  position: 16
+  red: 0
+  green: 0
+  blue: 255

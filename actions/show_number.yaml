@@ -1,0 +1,13 @@
+# Show a number, right aligned, then back to the time.
+#
+# value:    A whole number. There's no decimal point on the panel, so round
+#           before sending. Out of range values are clamped, not wrapped.
+# unit:     One character for the rightmost digit, e.g. "C" or "F", which also
+#           light the degree mark. Use "" to give the number all four digits.
+# duration: How long to show it, in milliseconds (100 to 600000).
+
+action: esphome.wifi_clock_show_number
+data:
+  value: 21
+  unit: "C"
+  duration: 5000

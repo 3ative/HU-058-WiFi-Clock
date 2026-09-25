@@ -1,0 +1,14 @@
+# Colour one digit. Each digit carries its own indicator, so the colon takes
+# the colour of digit 1 and the AM mark the colour of digit 0.
+# Not remembered across a reboot. clear_digit_colors hands it back.
+#
+# digit:            0 (leftmost) to 3 (rightmost), or -1 for all four.
+# red, green, blue: 0 to 255. Used as given, so a digit can be dimmer than
+#                   its neighbours as well as a different colour.
+
+action: esphome.wifi_clock_set_digit_color
+data:
+  digit: 0
+  red: 255
+  green: 0
+  blue: 0

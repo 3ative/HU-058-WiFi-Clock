@@ -1,0 +1,12 @@
+# Show up to 4 characters, left aligned, then back to the time.
+#
+# message:  Up to 4 characters. Anything past the fourth is dropped. Case is
+#           forgiving, but the font picks the shape, so "LoAd" reads better
+#           than "LOAD". K M V W X Z can't be drawn and show blank. Use ° or *
+#           for a degree sign.
+# duration: How long to show it, in milliseconds (100 to 600000).
+
+action: esphome.wifi_clock_show_text
+data:
+  message: "HEAt"
+  duration: 5000

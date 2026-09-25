@@ -1,0 +1,4 @@
+# Hand the whole panel back to the Display light. Clears digit colours,
+# single LED colours and gradients.
+
+action: esphome.wifi_clock_clear_digit_colors

@@ -8,26 +8,29 @@ Hack this [RGB 7-segment clock kit](https://s.click.aliexpress.com/e/_c4nzAME1) 
 A big thank you to **misterblack1** for his original project - his work inspired this version and made it possible. His repo is linked in the [Credits](#-credits) section at the bottom.
 
 ## ✨ Features
-- **World Clock** - Pick each clock's city from Home Assistant, DST included. Build a few for a row of world clocks
 - **Full RGB control** - Colour per panel, per digit or per LED, plus gradients
-- **On-device effects** - Colour Cycle and Flash, smooth even if WiFi drops
-- **Auto Brightness** - Light sensor with adjustable Min and Max from Home Assistant
-- **Cycle Temperature** - Shows any Home Assistant temperature sensor between the time, in °C or °F automatically
-- **Cycle Date** - Shows the date between the time, as DD-MM or MM-DD. It follows the clock's city, so it changes with the Time Zone too. Both cycles take turns when they're on together
-- **OTA indicator** - Shows `OtA` on the display while a firmware update uploads
-- **Show Text** - Put up to 4 characters on the display from your automations
 - **12 / 24 hour time** - With an AM indicator in 12 hour mode
-- **Colon selector** - Off (steady), Blink or Blink Fast
-- **WiFi status at a glance** - The top colon dot goes out if WiFi drops
+- **On-device effects** - Colour Cycle and Flash, smooth even if WiFi drops
+- **WiFi status at a glance** - The top colon dot goes out if WiFi drops<br/><br/>
+- (Edit) **Auto Brightness** - Light sensor with adjustable Min and Max from Home Assistant
+- (Edit) **Colon selector** - Off (steady), Blink or Blink Fast
+- (Edit) **World Clock** - Pick each clock's city from Home Assistant, DST included. Build a few for a row of world clocks<br/><br/>
+- (Added) **Cycle Temperature** - Shows any Home Assistant temperature sensor between the time - (Auto °C or °F)
+- (Added) **Cycle Date** - Shows the date between the time. Follows the clock's city / Time Zone
+- (Added) **Date Format** - Manual for DD-MM or MM-DD
+- (Added) **OTA indicator** - Shows `OtA` on the display while a firmware update uploads
+- (Added) **Boot Indicator** - Shows `LoAd` when ESP32 Starts up
+- (Added) **Show Text** - Put up to 4 characters on the display from your automations
 
-#### Parts List:
+
+## Parts List:
 - HU-058 RGB Clock Kit: [AliExpress](https://s.click.aliexpress.com/e/_c4nzAME1)
 - ESP32-C3 Super Mini: [AliExpress](https://s.click.aliexpress.com/e/_c2xh5dyV)
 - USB-C panel socket: [Amazon](https://link.amazon/B03ckRlzv)
 - Everything else I use: [Amazon Shop](https://amzn.to/3uRw8fi)
 ###### *As an Amazon Associate I earn from qualifying purchases. Some of these are affiliate links. Using them ⇈ provides monetary support at no extra cost to you. Thank you for using them💖
 
-#### *Code-y Bits*
+## *Code-y Bits*
 - World Clock: [world-clock.yaml](world-clock.yaml)
 - Local time only (follows Home Assistant's time zone): [wifi-clock.yaml](wifi-clock.yaml)
 - External Component: [components/aip33628](components/aip33628)

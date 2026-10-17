@@ -35,7 +35,7 @@ A big thank you to **misterblack1** for his original project - his work inspired
 - Local time only (follows Home Assistant's time zone): [wifi-clock.yaml](wifi-clock.yaml)
 - External Component: [components/aip33628](components/aip33628)
 
-#### 🎬 YouTube tutorial: [Coming Soon](#)
+#### 🎬 YouTube tutorial: [ESPHome Smart Clock Build for Home Assistant - Under $10](https://youtu.be/siBwsVdmn7I)
 
 ## 🔤 The Font
 These characters can be shown, in the case you see here:

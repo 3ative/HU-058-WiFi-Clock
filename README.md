@@ -35,6 +35,42 @@ A big thank you to **misterblack1** for his original project - his work inspired
 - Local time only (follows Home Assistant's time zone): [wifi-clock.yaml](wifi-clock.yaml)
 - External Component: [components/aip33628](components/aip33628)
 
+## 🌍 Adding more cities to the World Clock
+[world-clock.yaml](world-clock.yaml) comes with 5 cities. To add more, make these 3 edits. The example adds Paris, Dubai and Hong Kong as cities 6 to 8.
+
+**1. `substitutions:`** - add a name and a POSIX TZ rule for each new city. Find more rules in the [posix_tz_db zones list](https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv).
+```yaml
+  city5: Sydney
+  city5_tz: "AEST-10AEDT,M10.1.0,M4.1.0/3"
+  city6: Paris
+  city6_tz: "CET-1CEST,M3.5.0,M10.5.0/3"
+  city7: Dubai
+  city7_tz: "<+04>-4"
+  city8: Hong Kong
+  city8_tz: "HKT-8"
+```
+
+**2. `script:` > `apply_timezone`** - add each new `_tz` to the list. Swap the old `*i < 5` check for the `sizeof` one below. It counts the list for you, so you won't need to change this line again.
+```yaml
+  - id: apply_timezone
+    then:
+      - lambda: |-
+          static const char *const TZ[] = {"${city1_tz}", "${city2_tz}", "${city3_tz}",
+                                           "${city4_tz}", "${city5_tz}", "${city6_tz}",
+                                           "${city7_tz}", "${city8_tz}"};
+          auto i = id(time_zone).active_index();
+          if (i.has_value() && *i < sizeof(TZ) / sizeof(TZ[0]))
+            id(panel)->set_timezone(TZ[*i]);
+```
+
+**3. `select:` > `Time Zone`** - add each new city name to `options`.
+```yaml
+    options: ["${city1}", "${city2}", "${city3}", "${city4}", "${city5}",
+              "${city6}", "${city7}", "${city8}"]
+```
+
+> Keep the order the same in steps 2 and 3. The Nth option uses the Nth time zone rule. To change a city instead of adding one, just edit its name and rule in `substitutions:`.
+
 #### 🎬 YouTube tutorial: [ESPHome Smart Clock Build for Home Assistant - Under $10](https://youtu.be/siBwsVdmn7I)
 
 ## 🔤 The Font

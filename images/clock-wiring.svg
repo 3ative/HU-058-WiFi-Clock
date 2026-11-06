@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="930" viewBox="0 0 1400 930" font-family="Arial, Helvetica, sans-serif">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#001a7a"/><stop offset="0.45" stop-color="#00094a"/><stop offset="1" stop-color="#00010f"/></linearGradient>
+<radialGradient id="g1" cx="0.12" cy="0.45" r="0.5"><stop offset="0" stop-color="#2f6bff" stop-opacity="0.35"/><stop offset="1" stop-color="#2f6bff" stop-opacity="0"/></radialGradient>
+<radialGradient id="g2" cx="0.85" cy="0.1" r="0.6"><stop offset="0" stop-color="#1f4dff" stop-opacity="0.4"/><stop offset="1" stop-color="#1f4dff" stop-opacity="0"/></radialGradient>
+<filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1400" height="930"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="tglow" filterUnits="userSpaceOnUse" x="0" y="0" width="1400" height="930"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="1400" height="930" fill="url(#bg)"/><rect width="1400" height="930" fill="url(#g1)"/><rect width="1400" height="930" fill="url(#g2)"/>
+<line x1="0" y1="110" x2="1400" y2="110" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="136" x2="1400" y2="136" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="162" x2="1400" y2="162" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="188" x2="1400" y2="188" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="214" x2="1400" y2="214" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="240" x2="1400" y2="240" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="266" x2="1400" y2="266" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="292" x2="1400" y2="292" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="318" x2="1400" y2="318" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="344" x2="1400" y2="344" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="370" x2="1400" y2="370" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="396" x2="1400" y2="396" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="422" x2="1400" y2="422" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="448" x2="1400" y2="448" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="474" x2="1400" y2="474" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="500" x2="1400" y2="500" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="526" x2="1400" y2="526" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="552" x2="1400" y2="552" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="578" x2="1400" y2="578" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="604" x2="1400" y2="604" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="630" x2="1400" y2="630" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="656" x2="1400" y2="656" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="682" x2="1400" y2="682" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="708" x2="1400" y2="708" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="734" x2="1400" y2="734" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="760" x2="1400" y2="760" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="786" x2="1400" y2="786" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="812" x2="1400" y2="812" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="838" x2="1400" y2="838" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="864" x2="1400" y2="864" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="890" x2="1400" y2="890" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<line x1="0" y1="916" x2="1400" y2="916" stroke="#4d8dff" stroke-opacity="0.05" stroke-width="2"/>
+<text x="700" y="62" font-size="34" font-weight="bold" text-anchor="middle" fill="#ffffff" filter="url(#tglow)">HU-058 Clock - ESP32-C3 Super Mini Wiring</text>
+<rect x="80" y="130" width="250" height="750" rx="16" fill="#2a5bd7" fill-opacity="0.18" stroke="#5b9bff" stroke-width="2.5"/>
+<text x="205" y="168" font-size="21" font-weight="bold" text-anchor="middle" fill="#eaf1ff">ESP32-C3</text>
+<text x="205" y="192" font-size="21" font-weight="bold" text-anchor="middle" fill="#eaf1ff">Super Mini</text>
+<rect x="900" y="200" width="440" height="690" rx="16" fill="#2a5bd7" fill-opacity="0.18" stroke="#5b9bff" stroke-width="2.5"/>
+<text x="925" y="230" font-size="19" font-weight="bold" fill="#eaf1ff">MCU socket U4 (8051 removed)</text>
+<rect x="420" y="320" width="400" height="185" rx="12" fill="#7b4dff" fill-opacity="0.14" stroke="#9a7bff" stroke-width="2" stroke-dasharray="6 5"/>
+<line x1="330" y1="250" x2="900" y2="250" stroke="#ff3b2f" stroke-width="4.5" filter="url(#glow)"/>
+<text x="315" y="256" font-size="18" font-weight="bold" text-anchor="end" fill="#eaf1ff">5V</text>
+<circle cx="330" cy="250" r="7" fill="#ff3b2f" stroke="#cfe0ff" stroke-width="1.5"/>
+<circle cx="900" cy="250" r="7" fill="#00094a" stroke="#cfe0ff" stroke-width="2"/>
+<text x="925" y="256" font-size="18" font-weight="bold" fill="#eaf1ff">Pin 6</text>
+<text x="1010" y="256" font-size="18" fill="#9fc0ff">+5V</text>
+<line x1="330" y1="300" x2="900" y2="300" stroke="#a9b8da" stroke-width="8" stroke-linecap="round"/>
+<line x1="330" y1="300" x2="900" y2="300" stroke="#0b0b0f" stroke-width="4.5" filter="url(#glow)"/>
+<text x="315" y="306" font-size="18" font-weight="bold" text-anchor="end" fill="#eaf1ff">GND</text>
+<circle cx="330" cy="300" r="7" fill="#0b0b0f" stroke="#cfe0ff" stroke-width="1.5"/>
+<circle cx="900" cy="300" r="7" fill="#00094a" stroke="#cfe0ff" stroke-width="2"/>
+<text x="925" y="306" font-size="18" font-weight="bold" fill="#eaf1ff">Pin 8</text>
+<text x="1010" y="306" font-size="18" fill="#9fc0ff">GND</text>
+<line x1="330" y1="410" x2="900" y2="410" stroke="#4d7cff" stroke-width="4.5" filter="url(#glow)"/>
+<text x="315" y="416" font-size="18" font-weight="bold" text-anchor="end" fill="#eaf1ff">GPIO1</text>
+<circle cx="330" cy="410" r="7" fill="#4d7cff" stroke="#cfe0ff" stroke-width="1.5"/>
+<circle cx="900" cy="410" r="7" fill="#00094a" stroke="#cfe0ff" stroke-width="2"/>
+<text x="925" y="416" font-size="18" font-weight="bold" fill="#eaf1ff">Pin 4</text>
+<text x="1010" y="416" font-size="18" fill="#9fc0ff">LDR node (on kit board)</text>
+<line x1="330" y1="520" x2="900" y2="520" stroke="#ff7a3d" stroke-width="4.5" filter="url(#glow)"/>
+<text x="315" y="526" font-size="18" font-weight="bold" text-anchor="end" fill="#eaf1ff">GPIO3</text>
+<circle cx="330" cy="520" r="7" fill="#ff7a3d" stroke="#cfe0ff" stroke-width="1.5"/>
+<circle cx="900" cy="520" r="7" fill="#00094a" stroke="#cfe0ff" stroke-width="2"/>
+<text x="925" y="526" font-size="18" font-weight="bold" fill="#eaf1ff">Pin 10</text>
+<text x="1010" y="526" font-size="18" fill="#9fc0ff">Button 1</text>
+<line x1="330" y1="580" x2="900" y2="580" stroke="#14b87f" stroke-width="4.5" filter="url(#glow)"/>
+<text x="315" y="586" font-size="18" font-weight="bold" text-anchor="end" fill="#eaf1ff">GPIO4</text>
+<circle cx="330" cy="580" r="7" fill="#14b87f" stroke="#cfe0ff" stroke-width="1.5"/>
+<circle cx="900" cy="580" r="7" fill="#00094a" stroke="#cfe0ff" stroke-width="2"/>
+<text x="925" y="586" font-size="18" font-weight="bold" fill="#eaf1ff">Pin 16</text>
+<text x="1010" y="586" font-size="18" fill="#9fc0ff">Driver 1 clock</text>
+<line x1="330" y1="640" x2="900" y2="640" stroke="#4d7cff" stroke-width="4.5" filter="url(#glow)"/>
+<text x="315" y="646" font-size="18" font-weight="bold" text-anchor="end" fill="#eaf1ff">GPIO5</text>
+<circle cx="330" cy="640" r="7" fill="#4d7cff" stroke="#cfe0ff" stroke-width="1.5"/>
+<circle cx="900" cy="640" r="7" fill="#00094a" stroke="#cfe0ff" stroke-width="2"/>
+<text x="925" y="646" font-size="18" font-weight="bold" fill="#eaf1ff">Pin 5</text>
+<text x="1010" y="646" font-size="18" fill="#9fc0ff">Driver 1 data</text>
+<line x1="330" y1="700" x2="900" y2="700" stroke="#ffc400" stroke-width="4.5" filter="url(#glow)"/>
+<text x="315" y="706" font-size="18" font-weight="bold" text-anchor="end" fill="#eaf1ff">GPIO6</text>
+<circle cx="330" cy="700" r="7" fill="#ffc400" stroke="#cfe0ff" stroke-width="1.5"/>
+<circle cx="900" cy="700" r="7" fill="#00094a" stroke="#cfe0ff" stroke-width="2"/>
+<text x="925" y="706" font-size="18" font-weight="bold" fill="#eaf1ff">Pin 1</text>
+<text x="1010" y="706" font-size="18" fill="#9fc0ff">Driver 2 clock</text>
+<line x1="330" y1="760" x2="900" y2="760" stroke="#ffffff" stroke-width="4.5" filter="url(#glow)"/>
+<text x="315" y="766" font-size="18" font-weight="bold" text-anchor="end" fill="#eaf1ff">GPIO7</text>
+<circle cx="330" cy="760" r="7" fill="#ffffff" stroke="#cfe0ff" stroke-width="1.5"/>
+<circle cx="900" cy="760" r="7" fill="#00094a" stroke="#cfe0ff" stroke-width="2"/>
+<text x="925" y="766" font-size="18" font-weight="bold" fill="#eaf1ff">Pin 2</text>
+<text x="1010" y="766" font-size="18" fill="#9fc0ff">Driver 2 data</text>
+<line x1="330" y1="820" x2="900" y2="820" stroke="#ff7a3d" stroke-width="4.5" filter="url(#glow)"/>
+<text x="315" y="826" font-size="18" font-weight="bold" text-anchor="end" fill="#eaf1ff">GPIO10</text>
+<circle cx="330" cy="820" r="7" fill="#ff7a3d" stroke="#cfe0ff" stroke-width="1.5"/>
+<circle cx="900" cy="820" r="7" fill="#00094a" stroke="#cfe0ff" stroke-width="2"/>
+<text x="925" y="826" font-size="18" font-weight="bold" fill="#eaf1ff">Pin 9</text>
+<text x="1010" y="826" font-size="18" fill="#9fc0ff">Button 2</text>
+<text x="315" y="356" font-size="18" font-weight="bold" text-anchor="end" fill="#eaf1ff">3V3</text>
+<circle cx="330" cy="350" r="7" fill="#ff3b2f" stroke="#cfe0ff" stroke-width="1.5"/>
+<text x="625" y="344" font-size="15" font-weight="bold" fill="#c4b3ff">LDR divider (3V3 not 5V)</text>
+<line x1="330" y1="350" x2="440" y2="350" stroke="#ff3b2f" stroke-width="4.5" filter="url(#glow)"/>
+<rect x="440" y="338" width="90" height="24" rx="3" fill="#00094a" stroke="#cfe0ff" stroke-width="2"/>
+<text x="485" y="355" font-size="14" text-anchor="middle" fill="#eaf1ff">10K</text>
+<line x1="530" y1="350" x2="600" y2="350" stroke="#4d7cff" stroke-width="4.5" filter="url(#glow)"/>
+<line x1="600" y1="350" x2="600" y2="410" stroke="#4d7cff" stroke-width="4.5" filter="url(#glow)"/>
+<circle cx="600" cy="410" r="5" fill="#4d7cff"/><circle cx="700" cy="410" r="5" fill="#4d7cff"/>
+<line x1="700" y1="410" x2="700" y2="425" stroke="#4d7cff" stroke-width="4.5"/>
+<rect x="688" y="425" width="24" height="50" rx="3" fill="#00094a" stroke="#cfe0ff" stroke-width="2"/>
+<text x="725" y="455" font-size="14" fill="#eaf1ff">LDR</text>
+<line x1="700" y1="475" x2="700" y2="482" stroke="#cfe0ff" stroke-width="3"/>
+<line x1="686" y1="482" x2="714" y2="482" stroke="#cfe0ff" stroke-width="3"/><line x1="690" y1="488" x2="710" y2="488" stroke="#cfe0ff" stroke-width="3"/><line x1="694" y1="494" x2="706" y2="494" stroke="#cfe0ff" stroke-width="3"/>
+<text x="722" y="492" font-size="13" fill="#9fc0ff">GND</text>
+</svg>

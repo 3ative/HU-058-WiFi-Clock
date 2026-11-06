@@ -30,6 +30,13 @@ A big thank you to **misterblack1** for his original project - his work inspired
 - Everything else I use: [Amazon Shop](https://amzn.to/3uRw8fi)
 ###### *As an Amazon Associate I earn from qualifying purchases. Some of these are affiliate links. Using them ⇈ provides monetary support at no extra cost to you. Thank you for using them💖
 
+## 🔌 Wiring
+ESP32-C3 Super Mini to the clock's MCU socket (8051 removed), plus the LDR divider. Wire colours match the video.
+
+<div align="center">
+  <img src="images/clock-wiring.svg" alt="HU-058 WiFi Clock wiring diagram"/>
+</div>
+
 ## *Code-y Bits*
 - World Clock: [world-clock.yaml](world-clock.yaml)
 - Local time only (follows Home Assistant's time zone): [wifi-clock.yaml](wifi-clock.yaml)
